@@ -1,4 +1,4 @@
-package software.ulpgc.kata2;
+package software.ulpgc.katas;
 
 public record Empleado(String nombre, int edad, String departamento) {
 }
