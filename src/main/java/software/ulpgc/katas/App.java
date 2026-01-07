@@ -10,15 +10,20 @@ public class App {
         List<Empleado> empleados = cargador.cargarDesdeCSV("src/main/resources/datos.csv");
 
 
-        System.out.println("-------Empleados-------");
-        empleados.stream().forEach(
-                empleado -> System.out.println(empleado)
-        );
+        var generator = new HistogramGenerator();
 
-        System.out.println("-------Ventas solo-------");
-        empleados.stream()
-                .filter(empleado -> "Ventas".equalsIgnoreCase(empleado.departamento()))
-                .forEach(System.out::println);
+        Histogram histDepto = generator.compute(empleados, Empleado::departamento);
+
+        System.out.println("---Histograma Departamento---");
+        for (String key : histDepto.keys()) {
+            System.out.println(key + ": " + histDepto.valueOf(key));
+        }
+
+        Histogram histEdad = generator.compute(empleados, e -> e.edad());
+        System.out.println("---Histograma Edades (décadas)---");
+        for (String key : histEdad.keys()) {
+            System.out.println(key + ": " + histEdad.valueOf(key));
+        }
 
     }
 }
